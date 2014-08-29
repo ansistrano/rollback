@@ -1,0 +1,6 @@
+---
+deploy_from: "/Users/buenosvinos/Development/ansible"
+deploy_to: "/var/www/atrapalo.com"
+version_dir: "releases"
+current_dir: "current"
+max_fail_percentage: 0
