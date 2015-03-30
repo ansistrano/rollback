@@ -91,7 +91,7 @@ Pruning old releases
 In continuous delivery environments, the number of releases that you could possibly have in production is really high.
 Maybe you have tons of space and you don't mind, but it's common to keep just a custom number of releases.
 
-After the deployment, if you want to remove old releases just set the `keep_releases` variable to the total number
+After the deployment, if you want to remove old releases just set the `ansistrano_keep_releases` variable to the total number
 of releases you want to keep.
 
 Role Variables
@@ -99,12 +99,12 @@ Role Variables
 
 ```yaml
 - vars:
-  deploy_from: "/home/carlosbuenosvinos/my-project" # Where my local project is
-  deploy_to: "/var/www/atrapalo.com" # Base path to deploy to.
-  version_dir: "releases" # Releases folder name
-  keep_releases: 10 # Releases to keep after a new deployment. See "Pruning old releases".
-  custom_tasks_path: "./custom-tasks" # Path to find custom pre and post tasks for each deployment step.
-  current_dir: "current" # Softlink name. You should rarely changed it.
+  ansistrano_deploy_from: "/home/carlosbuenosvinos/my-project" # Where my local project is
+  ansistrano_deploy_to: "/var/www/atrapalo.com" # Base path to deploy to.
+  ansistrano_version_dir: "releases" # Releases folder name
+  ansistrano_keep_releases: 10 # Releases to keep after a new deployment. See "Pruning old releases".
+  ansistrano_custom_tasks_path: "./custom-tasks" # Path to find custom pre and post tasks for each deployment step.
+  ansistrano_current_dir: "current" # Softlink name. You should rarely changed it.
 ```
 
 Dependencies

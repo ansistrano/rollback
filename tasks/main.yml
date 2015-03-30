@@ -1,5 +1,5 @@
 ---
-- include: "{{ custom_tasks_path }}/before-rollback.yml"
+- include: "{{ ansistrano_custom_tasks_path }}/before-rollback.yml"
 - include: rollback.yml
-- include: "{{ custom_tasks_path }}/after-rollback.yml"
+- include: "{{ ansistrano_custom_tasks_path }}/after-rollback.yml"
 
