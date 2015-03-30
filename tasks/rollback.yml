@@ -20,6 +20,3 @@
 
 - name: Change web softlink from current release to previous one
   file: state=link path={{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }} src={{ ansistrano_deploy_to }}/{{ ansistrano_version_dir }}/{{ previous_release_version.stdout }}
-
-- name: Remove last version
-  file: state=absent path={{ previous_release_version }}

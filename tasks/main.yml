@@ -3,3 +3,6 @@
 - include: rollback.yml
 - include: "{{ ansistrano_custom_tasks_path }}/after-rollback.yml"
 
+- include: "{{ ansistrano_custom_tasks_path }}/before-cleanup.yml"
+- include: cleanup.yml
+- include: "{{ ansistrano_custom_tasks_path }}/after-cleanup.yml"
