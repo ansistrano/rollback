@@ -3,4 +3,5 @@ ansistrano_deploy_from: "./"
 ansistrano_deploy_to: "/var/www/atrapalo.com"
 ansistrano_version_dir: "releases"
 ansistrano_current_dir: "current"
+ansistrano_custom_tasks_path: "custom-tasks"
 max_fail_percentage: 0
