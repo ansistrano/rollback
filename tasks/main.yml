@@ -1,8 +1,12 @@
 ---
-- include: "{{ ansistrano_custom_tasks_path }}/before-rollback.yml"
-- include: rollback.yml
-- include: "{{ ansistrano_custom_tasks_path }}/after-rollback.yml"
+- name: ANSISTRANO | Check BC for early adopters
+  fail: msg="ansistrano_custom_tasks_path is not used anymore. Please, check the documentation at https://github.com/ansistrano/deploy"
+  when: ansistrano_custom_tasks_path is defined
 
-- include: "{{ ansistrano_custom_tasks_path }}/before-cleanup.yml"
+- include: "{{ ansistrano_before_symlink_tasks_file | default('empty.yml') }}"
+- include: symlink.yml
+- include: "{{ ansistrano_after_symlink_tasks_file | default('empty.yml') }}"
+
+- include: "{{ ansistrano_before_cleanup_tasks_file | default('empty.yml') }}"
 - include: cleanup.yml
-- include: "{{ ansistrano_custom_tasks_path }}/after-cleanup.yml"
+- include: "{{ ansistrano_after_cleanup_tasks_file | default('empty.yml') }}"

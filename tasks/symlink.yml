@@ -1,0 +1,22 @@
+- name: ANSISTRANO | Get releases path
+  command: echo "{{ ansistrano_deploy_to }}/{{ ansistrano_version_dir }}"
+  register: ansistrano_releases_path
+
+- name: ANSISTRANO | Get number of releases
+  shell: echo `ls {{ ansistrano_releases_path.stdout }} -1t | wc -l`
+  register: ansistrano_versions_count
+
+- name: ANSISTRANO | Check if there is more than one release
+  fail: msg="Could not rollback the code because there is no prior release"
+  when: ansistrano_versions_count.stdout|int <= 1
+
+- name: ANSISTRANO | Get current release version
+  shell: echo `ls {{ ansistrano_deploy_to }}/{{ ansistrano_version_dir }} -1t | head -n 1`
+  register: ansistrano_current_release_version
+
+- name: ANSISTRANO | Get previous releases version
+  shell: echo `ls {{ ansistrano_deploy_to }}/{{ ansistrano_version_dir }} -1t | head -n 2 | tail -n 1`
+  register: ansistrano_previous_release_version
+
+- name: ANSISTRANO | Change web softlink from current release to previous one
+  file: state=link path={{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }} src={{ ansistrano_deploy_to }}/{{ ansistrano_version_dir }}/{{ ansistrano_previous_release_version.stdout }}
