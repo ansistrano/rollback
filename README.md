@@ -70,9 +70,12 @@ Main workflow
 
 Ansistrano deploys applications following the Capistrano flow.
 
+* Setup phase: Creates the folder structure to hold your releases
 * Code update phase: Puts the new release into your hosts
 * Symlink phase: After deploying the new release into your hosts, this step changes the `current` softlink to new the release
 * Cleanup phase: Removes any old version based in the `ansistrano_keep_releases` parameter (see "Role Variables")
+
+![Ansistrano Flow](https://raw.githubusercontent.com/ansistrano/deploy/master/docs/ansistrano-flow.png)
 
 Role Variables
 --------------
@@ -90,6 +93,8 @@ Role Variables
   ansistrano_git_branch: master # Branch to use when deploying
   
   # Hooks: custom tasks if you need them
+  ansistrano_before_setup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-setup-tasks.yml"
+  ansistrano_after_setup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-after-setup-tasks.yml"
   ansistrano_before_update_code_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-update-code-tasks.yml"
   ansistrano_after_update_code_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-after-update-code-tasks.yml"
   ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-symlink-tasks.yml"
@@ -176,7 +181,6 @@ If you want to deploy to different environments such as devel, preprod and prod,
 ```ansible-playbook -i hosts_preprod deploy.yml```
 
 ```ansible-playbook -i hosts_prod deploy.yml```
-
 
 Hooks: Custom tasks
 -------------------
