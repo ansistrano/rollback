@@ -1,2 +1,2 @@
 - name: ANSISTRANO | Remove rollbacked version
-  file: state=absent path={{ ansistrano_deploy_to }}/{{ ansistrano_version_dir }}/{{ ansistrano_current_release_version.stdout }}
+  file: state=absent path={{ ansistrano_releases_path.stdout }}/{{ ansistrano_current_release_version.stdout }}
