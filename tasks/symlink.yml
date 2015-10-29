@@ -7,7 +7,7 @@
   register: ansistrano_versions_count
 
 - name: ANSISTRANO | Check if there is more than one release
-  fail: msg="Could not rollback the code because there is no prior release"
+  fail: msg="Could not roll back the code because there is no prior release"
   when: ansistrano_versions_count.stdout|int <= 1
 
 - name: ANSISTRANO | Get current release version
