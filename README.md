@@ -82,21 +82,12 @@ Role Variables
 
 ```yaml
 - vars:
-  ansistrano_deploy_from: "./" # Where my local project is
   ansistrano_deploy_to: "/var/www/my-app" # Base path to deploy to.
   ansistrano_version_dir: "releases" # Releases folder name
   ansistrano_current_dir: "current" # Softlink name. You should rarely changed it.
-  ansistrano_keep_releases: 0 # Releases to keep after a new deployment. See "Pruning old releases".
-  ansistrano_deploy_via: "rsync" # Method used to deliver the code to the server. Options are copy, rsync or git
-  ansistrano_rsync_extra_params: "" # Extra parameters to use when deploying with rsync 
-  ansistrano_git_repo: git@github.com:USERNAME/REPO.git # Location of the git repository
-  ansistrano_git_branch: master # Branch to use when deploying
+  ansistrano_remove_rolled_back: yes # You can change this setting in order to keep the rolled back release in the server for later inspection
   
   # Hooks: custom tasks if you need them
-  ansistrano_before_setup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-setup-tasks.yml"
-  ansistrano_after_setup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-after-setup-tasks.yml"
-  ansistrano_before_update_code_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-update-code-tasks.yml"
-  ansistrano_after_update_code_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-after-update-code-tasks.yml"
   ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-symlink-tasks.yml"
   ansistrano_after_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-after-symlink-tasks.yml"
   ansistrano_before_cleanup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-cleanup-tasks.yml"
@@ -154,7 +145,7 @@ In order to rollback with Ansistrano, you need to set up the deployment and run 
 
 ```ansible-playbook -i hosts rollback.yml```
 
-If you try to rollback with zero or one releases deployed, an error will be raised and no actions performed.
+If you try to roll back with zero or one releases deployed, an error will be raised and no actions performed.
 
 Variables you can tune in rollback role are less than in deploy one:
 

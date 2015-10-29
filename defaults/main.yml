@@ -8,4 +8,5 @@ ansistrano_version_dir: "releases"
 # Softlink name for the current release
 ansistrano_current_dir: "current"
 
-max_fail_percentage: 0
+# Remove rolled back release?
+ansistrano_remove_rolled_back: yes
