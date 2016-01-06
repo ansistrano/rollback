@@ -18,3 +18,7 @@
 - name: ANSISTRANO | Get previous releases version
   shell: echo `ls {{ ansistrano_releases_path.stdout }} -1t | head -n 2 | tail -n 1`
   register: ansistrano_previous_release_version
+
+- name: ANSISTRANO | Get release path
+  command: echo "{{ ansistrano_releases_path.stdout }}/{{ ansistrano_previous_release_version.stdout }}"
+  register: ansistrano_release_path
