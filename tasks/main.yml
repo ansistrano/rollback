@@ -1,6 +1,7 @@
 ---
 - name: ANSISTRANO | Check BC for early adopters
-  fail: msg="ansistrano_custom_tasks_path is not used anymore. Please, check the documentation at https://github.com/ansistrano/deploy"
+  fail:
+    msg: "ansistrano_custom_tasks_path is not used anymore. Please, check the documentation at https://github.com/ansistrano/deploy"
   when: ansistrano_custom_tasks_path is defined
 
 - include: "{{ ansistrano_before_setup_tasks_file | default('empty.yml') }}"
