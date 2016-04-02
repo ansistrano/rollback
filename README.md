@@ -22,13 +22,30 @@ Early adopters
 
 If you were an early adopter, you should know we have broken BC by moving from using `ansistrano_custom_tasks_path` to individual and specific files per step. See "Role Variables". **The role displays a warning if the variable is defined and although your old playbooks may still run with no errors, you will see that your code is uploaded but custom tasks are not run.**
 
+Ansistrano anonymous usage stats
+--------------------------------
+
+We have recently added an extra optional step in Ansistrano so that we can know how many people are deploying their applications with our project. Unfortunately, Ansible Galaxy does not provide any numbers on usage or downloads so this is one of the only ways we have to measure how many users we really have.
+
+You can check the code we use to store your anonyomus stats at [the ansistrano.com repo](https://github.com/ansistrano/ansistrano.com) and anyway, if you are not comfortable with this, you will always be able to disable this extra step by setting `ansistrano_allow_anonymous_stats` to false in your playbooks.
+
 Who is using Ansistrano?
 ------------------------
 
 Is Ansistrano ready to be used? Here are some companies currently using it:
 
-* Atrápalo: https://github.com/atrapalo (9K global alexa ranking)
-* Another Place Productions: http://www.anotherplaceproductions.com
+* [Atrápalo](http://www.atrapalo.com)
+* [Another Place Productions](http://www.anotherplaceproductions.com)
+* [Suntransfers](http://www.suntransfers.com)
+* [Ulabox](https://www.ulabox.com)
+* [Euromillions.com](http://euromillions.com/)
+* [Uvinum](http://www.uvinum.com)
+* [Cycloid](http://www.cycloid.io)
+* [Spotahome](https://www.spotahome.com)
+* [Ofertix](http://www.ofertix.com)
+* [Nice&Crazy](http://www.niceandcrazy.com)
+* [Gstock](http://www.g-stock.es)
+* [CMP Group](http://www.teamcmp.com)
 
 If you are also using it, please let us know via a PR to this document.
 
@@ -51,7 +68,7 @@ $ ansible-galaxy install carlosbuenosvinos.ansistrano-deploy carlosbuenosvinos.a
 Update
 ------
 
-If you want to update the role, you need to pass **--force** parameter when installing. Please, check the following command: 
+If you want to update the role, you need to pass **--force** parameter when installing. Please, check the following command:
 
 ```
 $ ansible-galaxy install --force carlosbuenosvinos.ansistrano-deploy carlosbuenosvinos.ansistrano-rollback
@@ -61,7 +78,7 @@ Features
 --------
 
 * Rollback in seconds (with ansistrano.rollback role)
-* Customize your deployment with hooks before and after critical steps 
+* Customize your deployment with hooks before and after critical steps
 * Save disk space keeping a maximum fixed releases in your hosts
 * Choose between SCP (push), RSYNC (push) or GIT (pull) deployment strategies
 
@@ -86,7 +103,8 @@ Role Variables
   ansistrano_version_dir: "releases" # Releases folder name
   ansistrano_current_dir: "current" # Softlink name. You should rarely changed it.
   ansistrano_remove_rolled_back: yes # You can change this setting in order to keep the rolled back release in the server for later inspection
-  
+  ansistrano_allow_anonymous_stats: yes
+
   # Hooks: custom tasks if you need them
   ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-symlink-tasks.yml"
   ansistrano_after_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-after-symlink-tasks.yml"
@@ -154,7 +172,7 @@ Variables you can tune in rollback role are less than in deploy one:
   ansistrano_deploy_to: "/var/www/my-app" # Base path to deploy to.
   ansistrano_version_dir: "releases" # Releases folder name
   ansistrano_current_dir: "current" # Softlink name. You should rarely changed it.
-  
+
   # Hooks: custom tasks if you need them
   ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-symlink-tasks.yml"
   ansistrano_after_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-after-symlink-tasks.yml"
@@ -211,7 +229,7 @@ When writing your custom tasks files you may need some variables that Ansistrano
 * ```{{ ansistrano_timestamp.stdout }}```: Timestamp for the current deployment
 * ```{{ ansistrano_release_path.stdout }}```: Path to current deployment release (probably the one you are going to use the most)
 * ```{{ ansistrano_releases_path.stdout }}```: Path to releases folder
-* ```{{ ansistrano_shared_path.stdout }}```: Path to shared folder (where common releases assets can be stored)  
+* ```{{ ansistrano_shared_path.stdout }}```: Path to shared folder (where common releases assets can be stored)
 
 Pruning old releases
 --------------------
@@ -256,7 +274,7 @@ Example Playbook
 In the folder, `example` you can check an example project that shows how to deploy with Ansistrano. In order to run it, you should:
 
 ```
-$ cd example 
+$ cd example
 $ ansible-playbook -i hosts deploy.yml
 ```
 
@@ -267,7 +285,7 @@ We have added Ansistrano support for other projects we are working on.
 
 * LastWishes: Domain-Driven Design PHP Sample App: https://github.com/dddinphp/last-wishes
 
-As an example, see the execution log of the LastWishes deployment: 
+As an example, see the execution log of the LastWishes deployment:
 
 ```
 PLAY [Deploy last wishes app to my server] ************************************
