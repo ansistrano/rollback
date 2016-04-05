@@ -1,6 +1,8 @@
 Ansistrano
 ==========
 
+[![Build Status](https://travis-ci.org/ansistrano/rollback.svg?branch=master)](https://travis-ci.org/ansistrano/rollback)
+
 **ansistrano.deploy** and **ansistrano.rollback** are Ansible roles to easily manage the deployment process for scripting applications such as PHP, Python and Ruby. It's an Ansible port for Capistrano.
 
 History
