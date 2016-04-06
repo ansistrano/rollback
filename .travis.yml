@@ -14,8 +14,12 @@ before_install:
  - sudo apt-get -y update
  - sudo apt-get -y install ansible
  - ansible --version
+ # We download the latest deploy stable tag
+ - sudo ansible-galaxy install carlosbuenosvinos.ansistrano-deploy
 
 script:
  - echo localhost > inventory
  - ansible-playbook -i inventory test/test.yml --syntax-check
- # - ansible-playbook -i inventory --connection=local --sudo -v test/test.yml
+ - ansible-playbook -i inventory --connection=local --sudo -v test/deploy.yml
+ - ansible-playbook -i inventory --connection=local --sudo -v test/deploy.yml
+ - ansible-playbook -i inventory --connection=local --sudo -v test/test.yml
