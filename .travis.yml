@@ -4,9 +4,9 @@ dist: trusty
 
 matrix:
   include:
-    - env: ANSIBLE_VERSION=1.8.4
     - env: ANSIBLE_VERSION=1.9.5
-    - env: ANSIBLE_VERSION=2.1.0
+    - env: ANSIBLE_VERSION=2.1.2
+    - env: ANSIBLE_VERSION=2.2.1
 
 before_install:
  - sudo apt-get -y install software-properties-common

@@ -104,6 +104,7 @@ Role Variables
   ansistrano_deploy_to: "/var/www/my-app" # Base path to deploy to.
   ansistrano_version_dir: "releases" # Releases folder name
   ansistrano_current_dir: "current" # Softlink name. You should rarely changed it.
+  ansistrano_rollback_to_release: "" # If specified, the application will be rolled back to this release version; previous release otherwise.
   ansistrano_remove_rolled_back: yes # You can change this setting in order to keep the rolled back release in the server for later inspection
   ansistrano_allow_anonymous_stats: yes
 

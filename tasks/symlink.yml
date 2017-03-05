@@ -3,4 +3,4 @@
   file:
     state: link
     path: "{{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }}"
-    src: "./{{ ansistrano_version_dir }}/{{ ansistrano_previous_release_version.stdout }}"
+    src: "./{{ ansistrano_version_dir }}/{{ ansistrano_rollback_release_version }}"
