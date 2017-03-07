@@ -11,6 +11,9 @@ ansistrano_current_dir: "current"
 # Remove rolled back release?
 ansistrano_remove_rolled_back: yes
 
+# Rollback to this release version (previous by default)
+ansistrano_rollback_to_release: ""
+
 # Sends anonymous stats to the www.ansistrano.com servers
 # You can disallow it by just setting this parameter to "no" in your playbook
 ansistrano_allow_anonymous_stats: yes

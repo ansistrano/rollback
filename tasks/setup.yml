@@ -16,10 +16,24 @@
   shell: echo `ls -1t {{ ansistrano_releases_path.stdout }} | head -n 1`
   register: ansistrano_current_release_version
 
+- stat:
+    path: "{{ ansistrano_releases_path.stdout }}/{{ ansistrano_rollback_to_release }}"
+  register: stat_rollback_release_version
+  when: ansistrano_rollback_to_release != ""
+
+- name: ANSISTRANO | Check that the provided rollback release exists
+  fail:
+    msg: "Specified rollback version does not exist"
+  when: ansistrano_rollback_to_release != "" and (stat_rollback_release_version.stat.exists is not defined or stat_rollback_release_version.stat.isdir == False)
+
 - name: ANSISTRANO | Get previous releases version
   shell: echo `ls -1t {{ ansistrano_releases_path.stdout }} | head -n 2 | tail -n 1`
   register: ansistrano_previous_release_version
 
+- name: ANSISTRANO | Get rollback release version
+  set_fact:
+    ansistrano_rollback_release_version: "{{ ansistrano_rollback_to_release if ansistrano_rollback_to_release != '' else ansistrano_previous_release_version.stdout }}"
+
 - name: ANSISTRANO | Get release path
-  command: echo "{{ ansistrano_releases_path.stdout }}/{{ ansistrano_previous_release_version.stdout }}"
+  command: echo "{{ ansistrano_releases_path.stdout }}/{{ ansistrano_rollback_release_version }}"
   register: ansistrano_release_path

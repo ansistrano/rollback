@@ -1,10 +1,10 @@
 ---
 galaxy_info:
   author: ansistrano
-  description: Ansible role to roll back scripting applications like PHP, Python, Ruby, etc. in a Capistrano style
+  description: Ansible role to rollback scripting applications like PHP, Python, Ruby, etc. in a Capistrano style
   company: Ansistrano
   license: MIT
-  min_ansible_version: 1.6
+  min_ansible_version: 1.9
   platforms:
   - name: EL
     versions:

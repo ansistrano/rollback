@@ -104,6 +104,7 @@ Role Variables
   ansistrano_deploy_to: "/var/www/my-app" # Base path to deploy to.
   ansistrano_version_dir: "releases" # Releases folder name
   ansistrano_current_dir: "current" # Softlink name. You should rarely changed it.
+  ansistrano_rollback_to_release: "" # If specified, the application will be rolled back to this release version; previous release otherwise.
   ansistrano_remove_rolled_back: yes # You can change this setting in order to keep the rolled back release in the server for later inspection
   ansistrano_allow_anonymous_stats: yes
 
@@ -167,20 +168,7 @@ In order to rollback with Ansistrano, you need to set up the deployment and run 
 
 If you try to roll back with zero or one releases deployed, an error will be raised and no actions performed.
 
-Variables you can tune in rollback role are less than in deploy one:
-
-```yaml
-- vars:
-  ansistrano_deploy_to: "/var/www/my-app" # Base path to deploy to.
-  ansistrano_version_dir: "releases" # Releases folder name
-  ansistrano_current_dir: "current" # Softlink name. You should rarely changed it.
-
-  # Hooks: custom tasks if you need them
-  ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-symlink-tasks.yml"
-  ansistrano_after_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-after-symlink-tasks.yml"
-  ansistrano_before_cleanup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-cleanup-tasks.yml"
-  ansistrano_after_cleanup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-after-cleanup-tasks.yml"
-```
+Variables you can tune in rollback role are less than in deploy one, see [Role variables](#role-variables).
 
 Multistage environment (devel, preprod, prod, etc.)
 ---------------------------------------------------
