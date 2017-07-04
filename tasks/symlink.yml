@@ -1,5 +1,5 @@
 ---
-- name: ANSISTRANO | Change web softlink from current release to previous one
+- name: ANSISTRANO | Change symlink from current release to a previous one
   file:
     state: link
     path: "{{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }}"
