@@ -2,7 +2,7 @@
 # Sends anonymous stats if the user is ok with it
 - name: ANSISTRANO | Send anonymous stats
   uri:
-    url: http://ansistrano.com/rollback
+    url: https://ansistrano.com/rollback
     follow_redirects: all
     method: POST
     timeout: 5
