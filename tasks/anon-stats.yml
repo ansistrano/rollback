@@ -3,6 +3,7 @@
 - name: ANSISTRANO | Send anonymous stats
   uri:
     url: http://ansistrano.com/rollback
+    follow_redirects: all
     method: POST
     timeout: 5
   when: ansistrano_allow_anonymous_stats
