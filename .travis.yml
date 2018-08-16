@@ -15,7 +15,7 @@ before_install:
  - sudo pip install ansible==$ANSIBLE_VERSION
  - ansible --version
  # We download the latest deploy stable tag
- - sudo ansible-galaxy install -c carlosbuenosvinos.ansistrano-deploy
+ - sudo ansible-galaxy install -c ansistrano.deploy
 
 script:
  - echo localhost > inventory

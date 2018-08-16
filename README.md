@@ -64,7 +64,7 @@ Installation
 Ansistrano is an Ansible role distributed globally using [Ansible Galaxy](https://galaxy.ansible.com/). In order to install Ansistrano role you can use the following command.
 
 ```
-$ ansible-galaxy install carlosbuenosvinos.ansistrano-deploy carlosbuenosvinos.ansistrano-rollback
+$ ansible-galaxy install ansistrano.deploy ansistrano.rollback
 ```
 
 Update
@@ -73,7 +73,7 @@ Update
 If you want to update the role, you need to pass **--force** parameter when installing. Please, check the following command:
 
 ```
-$ ansible-galaxy install --force carlosbuenosvinos.ansistrano-deploy carlosbuenosvinos.ansistrano-rollback
+$ ansible-galaxy install --force ansistrano.deploy ansistrano.rollback
 ```
 
 Features
