@@ -109,10 +109,10 @@ vars:
   ansistrano_allow_anonymous_stats: yes
 
   # Hooks: custom tasks if you need them
-  ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-symlink-tasks.yml"
-  ansistrano_after_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-after-symlink-tasks.yml"
-  ansistrano_before_cleanup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-before-cleanup-tasks.yml"
-  ansistrano_after_cleanup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-after-cleanup-tasks.yml"
+  ansistrano_rollback_before_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-rollback-before-symlink-tasks.yml"
+  ansistrano_rollback_after_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-rollback-after-symlink-tasks.yml"
+  ansistrano_rollback_before_cleanup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-rollback-before-cleanup-tasks.yml"
+  ansistrano_rollback_after_cleanup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-rollback-after-cleanup-tasks.yml"
 ```
 
 `{{ playbook_dir }}` is an Ansible variable that holds the path to the current playbook.
@@ -209,7 +209,7 @@ For example, in order to restart apache after `Symlink` step, we'll add in the `
 * **Q: Where would you add sending email notification after a deployment?**
 * **Q: (for PHP and Symfony developers) Where would you clean the cache?**
 
-You can specify a custom tasks file for before and after every step using `ansistrano_before_*_tasks_file` and `ansistrano_after_*_tasks_file` role variables. See "Role Variables" for more information.
+You can specify a custom tasks file for before and after every step using `ansistrano_rollback_before_*_tasks_file` and `ansistrano_rollback_after_*_tasks_file` role variables. See "Role Variables" for more information.
 
 Variables in custom tasks
 -------------------------
