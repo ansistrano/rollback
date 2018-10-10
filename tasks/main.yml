@@ -1,19 +1,14 @@
 ---
-- name: ANSISTRANO | Check BC for early adopters
-  fail:
-    msg: "ansistrano_custom_tasks_path is not used anymore. Please, check the documentation at https://github.com/ansistrano/deploy"
-  when: ansistrano_custom_tasks_path is defined
+- include_tasks: "{{ ansistrano_before_setup_tasks_file | default('empty.yml') }}"
+- include_tasks: setup.yml
+- include_tasks: "{{ ansistrano_after_setup_tasks_file | default('empty.yml') }}"
 
-- include: "{{ ansistrano_before_setup_tasks_file | default('empty.yml') }}"
-- include: setup.yml
-- include: "{{ ansistrano_after_setup_tasks_file | default('empty.yml') }}"
+- include_tasks: "{{ ansistrano_before_symlink_tasks_file | default('empty.yml') }}"
+- include_tasks: symlink.yml
+- include_tasks: "{{ ansistrano_after_symlink_tasks_file | default('empty.yml') }}"
 
-- include: "{{ ansistrano_before_symlink_tasks_file | default('empty.yml') }}"
-- include: symlink.yml
-- include: "{{ ansistrano_after_symlink_tasks_file | default('empty.yml') }}"
+- include_tasks: "{{ ansistrano_before_cleanup_tasks_file | default('empty.yml') }}"
+- include_tasks: cleanup.yml
+- include_tasks: "{{ ansistrano_after_cleanup_tasks_file | default('empty.yml') }}"
 
-- include: "{{ ansistrano_before_cleanup_tasks_file | default('empty.yml') }}"
-- include: cleanup.yml
-- include: "{{ ansistrano_after_cleanup_tasks_file | default('empty.yml') }}"
-
-- include: anon-stats.yml
+- include_tasks: anon-stats.yml
