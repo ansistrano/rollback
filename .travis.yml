@@ -4,10 +4,10 @@ dist: trusty
 
 matrix:
   include:
-    - env: ANSIBLE_VERSION=2.3.3
     - env: ANSIBLE_VERSION=2.4.6
-    - env: ANSIBLE_VERSION=2.5.7
-    - env: ANSIBLE_VERSION=2.6.2    
+    - env: ANSIBLE_VERSION=2.5.10
+    - env: ANSIBLE_VERSION=2.6.5
+    - env: ANSIBLE_VERSION=2.7.0
 
 before_install:
  - sudo apt-get -y install software-properties-common
@@ -20,9 +20,9 @@ before_install:
 script:
  - echo localhost > inventory
  - ansible-playbook -i inventory test/test.yml --syntax-check
- - ansible-playbook -i inventory --connection=local --sudo -v test/deploy.yml
- - ansible-playbook -i inventory --connection=local --sudo -v test/deploy.yml
- - ansible-playbook -i inventory --connection=local --sudo -v test/test.yml
+ - ansible-playbook -i inventory --connection=local --become -v test/deploy.yml
+ - ansible-playbook -i inventory --connection=local --become -v test/deploy.yml
+ - ansible-playbook -i inventory --connection=local --become -v test/test.yml
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
