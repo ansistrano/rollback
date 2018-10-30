@@ -19,10 +19,12 @@ Project name
 
 Ansistrano comes from Ansible + Capistrano, easy, isn't it?
 
-Early adopters
---------------
+BC Breaks in 3.0
+----------------
 
-If you were an early adopter, you should know we have broken BC by moving from using `ansistrano_custom_tasks_path` to individual and specific files per step. See "Role Variables". **The role displays a warning if the variable is defined and although your old playbooks may still run with no errors, you will see that your code is uploaded but custom tasks are not run.**
+You should know we have broken BC by moving from using `ansistrano_before_cleanup_tasks_file` to `ansistrano_rollback_before_cleanup_tasks_file` and the same for all hooks. See "Role Variables". **Although your old playbooks may still run with no errors, you will see that your code is rolled back but custom tasks are not run.**
+
+You can check [this Pull Request](https://github.com/ansistrano/rollback/pull/21) for more details
 
 Ansistrano anonymous usage stats
 --------------------------------
@@ -109,6 +111,8 @@ vars:
   ansistrano_allow_anonymous_stats: yes
 
   # Hooks: custom tasks if you need them
+  ansistrano_rollback_before_setup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-rollback-before-setup-tasks.yml"
+  ansistrano_rollback_after_setup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-rollback-after-setup-tasks.yml"
   ansistrano_rollback_before_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-rollback-before-symlink-tasks.yml"
   ansistrano_rollback_after_symlink_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-rollback-after-symlink-tasks.yml"
   ansistrano_rollback_before_cleanup_tasks_file: "{{ playbook_dir }}/<your-deployment-config>/my-rollback-before-cleanup-tasks.yml"
