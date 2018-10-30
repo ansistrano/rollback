@@ -1,14 +1,14 @@
 ---
-- include_tasks: "{{ ansistrano_before_setup_tasks_file | default('empty.yml') }}"
+- include_tasks: "{{ ansistrano_rollback_before_setup_tasks_file | default('empty.yml') }}"
 - include_tasks: setup.yml
-- include_tasks: "{{ ansistrano_after_setup_tasks_file | default('empty.yml') }}"
+- include_tasks: "{{ ansistrano_rollback_after_setup_tasks_file | default('empty.yml') }}"
 
-- include_tasks: "{{ ansistrano_before_symlink_tasks_file | default('empty.yml') }}"
+- include_tasks: "{{ ansistrano_rollback_before_symlink_tasks_file | default('empty.yml') }}"
 - include_tasks: symlink.yml
-- include_tasks: "{{ ansistrano_after_symlink_tasks_file | default('empty.yml') }}"
+- include_tasks: "{{ ansistrano_rollback_after_symlink_tasks_file | default('empty.yml') }}"
 
-- include_tasks: "{{ ansistrano_before_cleanup_tasks_file | default('empty.yml') }}"
+- include_tasks: "{{ ansistrano_rollback_before_cleanup_tasks_file | default('empty.yml') }}"
 - include_tasks: cleanup.yml
-- include_tasks: "{{ ansistrano_after_cleanup_tasks_file | default('empty.yml') }}"
+- include_tasks: "{{ ansistrano_rollback_after_cleanup_tasks_file | default('empty.yml') }}"
 
 - include_tasks: anon-stats.yml
