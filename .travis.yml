@@ -7,7 +7,7 @@ matrix:
     - env: ANSIBLE_VERSION=2.5.15
     - env: ANSIBLE_VERSION=2.6.17
     - env: ANSIBLE_VERSION=2.7.11
-    - env: ANSIBLE_VERSION=2.8.0
+    - env: ANSIBLE_VERSION=2.8.1
 
 before_install:
  - sudo apt-get -y install software-properties-common
