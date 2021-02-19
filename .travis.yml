@@ -4,9 +4,9 @@ language: python
 matrix:
   include:
     - env: ANSIBLE_VERSION=2.7.18
-    - env: ANSIBLE_VERSION=2.8.15
-    - env: ANSIBLE_VERSION=2.9.14
-    - env: ANSIBLE_VERSION=2.10.1 
+    - env: ANSIBLE_VERSION=2.8.19
+    - env: ANSIBLE_VERSION=2.9.18
+    - env: ANSIBLE_VERSION=2.10.6 
 
 before_install:
  - sudo apt-get -y install software-properties-common
