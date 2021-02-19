@@ -1,6 +1,7 @@
 ---
 - name: ANSISTRANO | Get releases path
   command: echo "{{ ansistrano_deploy_to }}/{{ ansistrano_version_dir }}"
+  check_mode: no
   register: ansistrano_releases_path
 
 - name: ANSISTRANO | Get number of releases
@@ -36,4 +37,5 @@
 
 - name: ANSISTRANO | Get release path
   command: echo "{{ ansistrano_releases_path.stdout }}/{{ ansistrano_rollback_release_version }}"
+  check_mode: no
   register: ansistrano_release_path
