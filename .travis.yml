@@ -14,8 +14,7 @@ matrix:
 
 before_install:
  - sudo apt-get -y install software-properties-common
- - sudo apt-get -y install python-pip
- - sudo pip install ansible==$ANSIBLE_VERSION
+ - sudo -H pip install --no-cache-dir ansible==$ANSIBLE_VERSION
  - ansible --version
  # We download the latest deploy stable tag
  - sudo ansible-galaxy install -c ansistrano.deploy
