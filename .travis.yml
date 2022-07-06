@@ -1,5 +1,8 @@
 ---
+dist: focal
 language: python
+python:
+  - "3.9"
 
 matrix:
   include:
