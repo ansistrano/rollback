@@ -7,6 +7,8 @@ on:
 jobs:
   syntax:
     runs-on: ubuntu-latest
+    env:
+      ANSIBLE_ROLES_PATH: ${{ github.workspace }}/.ansible/roles
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,16 +23,19 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install ansible-core
           ansible-galaxy collection install ansible.posix
-          sudo ansible-galaxy role install -f -p /etc/ansible/roles ansistrano.deploy
-          sudo ln -sfn "$GITHUB_WORKSPACE" /etc/ansible/roles/local-ansistrano
+          mkdir -p "$ANSIBLE_ROLES_PATH"
+          ansible-galaxy role install -f -p "$ANSIBLE_ROLES_PATH" ansistrano.deploy
+          ln -sfn "$GITHUB_WORKSPACE" "$ANSIBLE_ROLES_PATH/local-ansistrano"
 
       - name: Run syntax check
         run: |
           printf 'localhost ansible_connection=local\n' > inventory
-          ANSIBLE_ROLES_PATH=/etc/ansible/roles ansible-playbook -i inventory --syntax-check test/test.yml
+          ansible-playbook -i inventory --syntax-check test/test.yml
 
   integration:
     runs-on: ubuntu-latest
+    env:
+      ANSIBLE_ROLES_PATH: ${{ github.workspace }}/.ansible/roles
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -45,11 +50,12 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install ansible-core
           ansible-galaxy collection install ansible.posix
-          sudo ansible-galaxy role install -f -p /etc/ansible/roles ansistrano.deploy
-          sudo ln -sfn "$GITHUB_WORKSPACE" /etc/ansible/roles/local-ansistrano
+          mkdir -p "$ANSIBLE_ROLES_PATH"
+          ansible-galaxy role install -f -p "$ANSIBLE_ROLES_PATH" ansistrano.deploy
+          ln -sfn "$GITHUB_WORKSPACE" "$ANSIBLE_ROLES_PATH/local-ansistrano"
 
       - name: Run integration tests
         run: |
           printf 'localhost ansible_connection=local\n' > inventory
-          ANSIBLE_ROLES_PATH=/etc/ansible/roles ansible-playbook -i inventory --connection=local --become -e update_cache=1 -v test/deploy.yml
-          ANSIBLE_ROLES_PATH=/etc/ansible/roles ansible-playbook -i inventory --connection=local --become -e update_cache=1 -v test/test.yml
+          ansible-playbook -i inventory --connection=local --become -e update_cache=1 -v test/deploy.yml
+          ansible-playbook -i inventory --connection=local --become -e update_cache=1 -v test/test.yml
