@@ -2,5 +2,48 @@
   hosts: all
   vars:
     ansistrano_deploy_to: "/tmp/my-app.com"
+    ansistrano_release_version: "20000101000000Z"
+  roles:
+    - { role: ansistrano.deploy }
+
+- name: Do a second deploy to create a rollback target
+  hosts: all
+  vars:
+    ansistrano_deploy_to: "/tmp/my-app.com"
+    ansistrano_release_version: "20000101000001Z"
+  roles:
+    - { role: ansistrano.deploy }
+
+- name: Do multiple deploys to support explicit rollback tests
+  hosts: all
+  vars:
+    ansistrano_deploy_to: "/tmp/my-other-app.com"
+  tasks:
+    - name: Clear previous deploy target
+      file:
+        path: "{{ ansistrano_deploy_to }}"
+        state: absent
+
+- name: Deploy first release for explicit rollback tests
+  hosts: all
+  vars:
+    ansistrano_deploy_to: "/tmp/my-other-app.com"
+    ansistrano_release_version: "20000101000000Z"
+  roles:
+    - { role: ansistrano.deploy }
+
+- name: Deploy second release for explicit rollback tests
+  hosts: all
+  vars:
+    ansistrano_deploy_to: "/tmp/my-other-app.com"
+    ansistrano_release_version: "20000101000001Z"
+  roles:
+    - { role: ansistrano.deploy }
+
+- name: Deploy third release for explicit rollback tests
+  hosts: all
+  vars:
+    ansistrano_deploy_to: "/tmp/my-other-app.com"
+    ansistrano_release_version: "20000101000002Z"
   roles:
     - { role: ansistrano.deploy }

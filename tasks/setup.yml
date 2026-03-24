@@ -1,24 +1,30 @@
 ---
 - name: ANSISTRANO | Get releases path
-  command: echo "{{ ansistrano_deploy_to }}/{{ ansistrano_version_dir }}"
-  check_mode: no
-  register: ansistrano_releases_path
+  set_fact:
+    ansistrano_releases_path: "{{ ansistrano_deploy_to }}/{{ ansistrano_version_dir }}"
 
-- name: ANSISTRANO | Get number of releases
-  shell: echo `ls -1t {{ ansistrano_releases_path.stdout }} | wc -l`
-  register: ansistrano_versions_count
+- name: ANSISTRANO | Gather releases
+  find:
+    paths: "{{ ansistrano_releases_path }}"
+    file_type: directory
+    recurse: false
+  register: ansistrano_releases
 
 - name: ANSISTRANO | Check if there is more than one release
   fail:
     msg: "Could not roll back the code because there is no prior release"
-  when: ansistrano_versions_count.stdout|int <= 1
+  when: ansistrano_releases.matched | int <= 1
+
+- name: ANSISTRANO | Sort releases by mtime
+  set_fact:
+    ansistrano_sorted_releases: "{{ ansistrano_releases.files | sort(attribute='mtime', reverse=true) }}"
 
 - name: ANSISTRANO | Get current release version
-  shell: echo `ls -1t {{ ansistrano_releases_path.stdout }} | head -n 1`
-  register: ansistrano_current_release_version
+  set_fact:
+    ansistrano_current_release_version: "{{ ansistrano_sorted_releases[0].path | basename }}"
 
 - stat:
-    path: "{{ ansistrano_releases_path.stdout }}/{{ ansistrano_rollback_to_release }}"
+    path: "{{ ansistrano_releases_path }}/{{ ansistrano_rollback_to_release }}"
   register: stat_rollback_release_version
   when: ansistrano_rollback_to_release != ""
 
@@ -28,14 +34,13 @@
   when: ansistrano_rollback_to_release != "" and (stat_rollback_release_version.stat.exists is not defined or stat_rollback_release_version.stat.isdir == False)
 
 - name: ANSISTRANO | Get previous releases version
-  shell: echo `ls -1t {{ ansistrano_releases_path.stdout }} | head -n 2 | tail -n 1`
-  register: ansistrano_previous_release_version
+  set_fact:
+    ansistrano_previous_release_version: "{{ ansistrano_sorted_releases[1].path | basename }}"
 
 - name: ANSISTRANO | Get rollback release version
   set_fact:
-    ansistrano_rollback_release_version: "{{ ansistrano_rollback_to_release if ansistrano_rollback_to_release != '' else ansistrano_previous_release_version.stdout }}"
+    ansistrano_rollback_release_version: "{{ ansistrano_rollback_to_release if ansistrano_rollback_to_release != '' else ansistrano_previous_release_version }}"
 
 - name: ANSISTRANO | Get release path
-  command: echo "{{ ansistrano_releases_path.stdout }}/{{ ansistrano_rollback_release_version }}"
-  check_mode: no
-  register: ansistrano_release_path
+  set_fact:
+    ansistrano_release_path: "{{ ansistrano_releases_path }}/{{ ansistrano_rollback_release_version }}"
